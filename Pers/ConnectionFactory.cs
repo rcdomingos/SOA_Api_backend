@@ -15,8 +15,8 @@ namespace SOA_backend.Pers
              * User Id=sa
              * Password = Sql!Express99
              */
-          //  conn = new SqlConnection("Server=192.168.1.13; Initial Catalog=SOA_20202; User Id=sa; Password=Sql!Express99");
-            conn = new SqlConnection("Server=127.0.0.1; Initial Catalog=SOA_LOCALGUIDES; User Id=sa; Password=Sql!Express99");
+            conn = new SqlConnection("Server=192.168.1.16; Initial Catalog=SOA_LOCALGUIDES; User Id=sa; Password=Sql!Express99");
+          // conn = new SqlConnection("Server=127.0.0.1; Initial Catalog=SOA_LOCALGUIDES; User Id=sa; Password=Sql!Express99");
 
             try
             {

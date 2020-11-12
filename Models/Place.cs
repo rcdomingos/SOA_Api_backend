@@ -9,49 +9,49 @@ namespace SOA_backend.Models
     {
         //atributos
         private int id;
-        private string nome;
-        private string descricao;
-        private string imagem;
-        private string categoria;
+        private string name;
+        private string description;
+        private string image;
+        private string category;
         private string latitude;
         private string longitude;
-        private decimal mediaGeral;
-        private decimal mediaLimpeza;
-        private decimal mediaDistancia;
-        private decimal mediaMascara;
+        private decimal averageTotalScore;
+        private decimal averageCleaningScore;
+        private decimal averageDistanceScore;
+        private decimal averageMaskUseScore;
 
         //construtor
         public Place()
         { }
 
 
-        public Place(int pID, string pNome, string pDescricao, string pImagem, string pCategoria, string pLatitude, 
-            string pLongitude,decimal pMediaGeral, decimal pMediaLimpeza, decimal pMediaDistancia, decimal pMediaMascara)
+        public Place(int pID, string pName, string pDescription, string pImage, string pCategory, string pLatitude, 
+            string pLongitude,decimal pAverageTotalScore, decimal pAverageCleaningScore, decimal pAverageDistanceScore, decimal pAverageMaskUseScore)
         {
             Id = pID;
-            Nome = pNome;
-            Descricao = pDescricao;
-            Imagem = pImagem;
-            Categoria = pCategoria;
+            Name = pName;
+            Description = pDescription;
+            Image = pImage;
+            Category = pCategory;
             Latitude = pLatitude;
             Longitude = pLongitude;
-            MediaGeral = pMediaGeral;
-            MediaLimpeza = pMediaLimpeza;
-            MediaDistancia = pMediaDistancia;
-            mediaMascara = pMediaMascara;
+            AverageTotalScore = pAverageTotalScore;
+            AverageCleaningScore = pAverageCleaningScore;
+            AverageDistanceScore = pAverageDistanceScore;
+            AverageMaskUseScore = pAverageMaskUseScore;
         }
 
         public int Id { get => id; set => id = value; }
-        public string Nome { get => nome; set => nome = value; }
-        public string Descricao { get => descricao; set => descricao = value; }
-        public string Imagem { get => imagem; set => imagem = value; }
-        public string Categoria { get => categoria; set => categoria = value; }
+        public string Name { get => name; set => name = value; }
+        public string Description { get => description; set => description = value; }
+        public string Image { get => image; set => image = value; }
+        public string Category { get => category; set => category = value; }
         public string Latitude { get => latitude; set => latitude = value; }
         public string Longitude { get => longitude; set => longitude = value; }
-        public decimal MediaGeral { get => mediaGeral; set => mediaGeral =value; }
-        public decimal MediaLimpeza { get => mediaLimpeza; set => mediaLimpeza = value; }
-        public decimal MediaDistancia { get => mediaDistancia; set => mediaDistancia = value; }
-        public decimal MediaMascara { get => mediaMascara; set => mediaMascara = value; }
+        public decimal AverageTotalScore { get => averageTotalScore; set => averageTotalScore =value; }
+        public decimal AverageCleaningScore { get => averageCleaningScore; set => averageCleaningScore = value; }
+        public decimal AverageDistanceScore { get => averageDistanceScore; set => averageDistanceScore = value; }
+        public decimal AverageMaskUseScore { get => averageMaskUseScore; set => averageMaskUseScore = value; }
 
 
 

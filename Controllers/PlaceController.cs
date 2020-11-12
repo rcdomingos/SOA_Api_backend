@@ -21,12 +21,12 @@ namespace SOA_backend.Controllers
 
         [AcceptVerbs("GET")]
         [Route("Place")]
-        public IEnumerable<string> ApiGetAllPlaces()
+        public IEnumerable<string> ApiGetAllPlaces(int category=0)
         {
-
+    
             PlaceDAO _placeDAO = new PlaceDAO();
 
-            List<Place> listaPlaces = _placeDAO.SelectAllPlaces(out string message);
+            List<Place> listaPlaces = _placeDAO.SelectAllPlaces(out string message, category);
 
             if (listaPlaces == null) return new string[] { message };
 

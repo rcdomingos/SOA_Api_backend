@@ -21,7 +21,7 @@ namespace SOA_backend.Models.DAO
                 SqlDataReader dr;
                 cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "SELECT a.cod_local, u.cod_usuario, u.nome, a.nota_geral, a.nota_limpeza, a.nota_distanciamento, a.nota_uso_mascara FROM avaliacao a JOIN usuario u ON u.cod_usuario = a.cod_usuario WHERE cod_local = " + placeId;
+                cmd.CommandText = "SELECT a.cod_avaliacao, u.cod_usuario, u.nome, a.nota_geral, a.nota_limpeza, a.nota_distanciamento, a.nota_uso_mascara FROM avaliacao a JOIN usuario u ON u.cod_usuario = a.cod_usuario WHERE a.cod_local = " + placeId;
                 List<Score> scoreList = new List<Score>();
 
                 dr = cmd.ExecuteReader();
@@ -123,7 +123,7 @@ namespace SOA_backend.Models.DAO
             {
                 cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "DELETE FROM avaliacao WHERE cod_avalicao = " + scoreId;
+                cmd.CommandText = "DELETE FROM avaliacao WHERE cod_avaliacao = " + scoreId;
 
                 var rowsAffected = cmd.ExecuteNonQuery();
                 return (rowsAffected > 0);

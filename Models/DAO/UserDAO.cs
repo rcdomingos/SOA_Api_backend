@@ -22,9 +22,9 @@ namespace SOA_backend.Models.DAO
                 bool isCreated;
                 cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "INSERT INTO usuario(nome,email,senha) VALUES ('" + usuario.Nome + 
+                cmd.CommandText = "INSERT INTO usuario(nome,email,senha) VALUES ('" + usuario.Name + 
                     "','" + usuario.Email +
-                    "','" + usuario.Senha + "')";
+                    "','" + usuario.Password + "')";
 
                 var rowsAffected = cmd.ExecuteNonQuery(); 
 
@@ -63,9 +63,9 @@ namespace SOA_backend.Models.DAO
                     userList.Add(new User()
                     {
                         Id = Convert.ToInt32(dr[0].ToString()),
-                        Nome = dr[1].ToString(),
+                        Name = dr[1].ToString(),
                         Email = dr[2].ToString(),
-                        Senha = dr[3].ToString(),
+                        Password = dr[3].ToString(),
                     });
                 }
 
@@ -98,9 +98,9 @@ namespace SOA_backend.Models.DAO
                 dr = cmd.ExecuteReader();
                 dr.Read();
                 selectedUser.Id = Convert.ToInt32(dr[0].ToString());
-                selectedUser.Nome = dr[1].ToString();
+                selectedUser.Name = dr[1].ToString();
                 selectedUser.Email = dr[2].ToString();
-                selectedUser.Senha = dr[3].ToString();
+                selectedUser.Password = dr[3].ToString();
 
                 return selectedUser;
             }
@@ -132,9 +132,9 @@ namespace SOA_backend.Models.DAO
                 dr = cmd.ExecuteReader();
                 dr.Read();
                 selectedUser.Id = Convert.ToInt32(dr[0].ToString());
-                selectedUser.Nome = dr[1].ToString();
+                selectedUser.Name = dr[1].ToString();
                 selectedUser.Email = dr[2].ToString();
-                selectedUser.Senha = dr[3].ToString();
+                selectedUser.Password = dr[3].ToString();
 
                 return selectedUser;
             }

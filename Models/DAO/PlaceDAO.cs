@@ -22,9 +22,9 @@ namespace SOA_backend.Models.DAO
                 bool isCreated;
                 cmd = conn.CreateCommand();
                 cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "INSERT INTO usuario(nome,email,senha) VALUES ('" + usuario.Nome +
+                cmd.CommandText = "INSERT INTO usuario(nome,email,senha) VALUES ('" + usuario.Name +
                     "','" + usuario.Email +
-                    "','" + usuario.Senha + "')";
+                    "','" + usuario.Password + "')";
 
 
                 var linhasAfetadas = cmd.ExecuteNonQuery();
@@ -46,9 +46,10 @@ namespace SOA_backend.Models.DAO
         }
 
 
-        public List<Place> SelectAllPlaces(out string message)
+        public List<Place> SelectAllPlaces(out string message, int cod_category = 0)
         {
             conn = new ConnectionFactory().GetConnectionDB(out message);
+            string queryCategory = cod_category != 0 ? "WHERE l.cod_categoria =" + cod_category : null;
             try
             {
                 SqlDataReader dr;
@@ -60,7 +61,7 @@ namespace SOA_backend.Models.DAO
                     "(SELECT(SUM(nota_distanciamento) / COUNT(nota_distanciamento)) FROM avaliacao WHERE cod_local = l.cod_local) AS media_distanciamento," +
                     "(SELECT(SUM(nota_uso_mascara) / COUNT(nota_uso_mascara)) FROM avaliacao WHERE cod_local = l.cod_local) AS media_uso_mascara" +
                     " FROM local l " +
-                    "inner JOIN categoria c ON c.cod_categoria = l.cod_categoria";
+                    "inner JOIN categoria c ON c.cod_categoria = l.cod_categoria " + queryCategory;
                 List<Place> PlaceList = new List<Place>();
 
                 dr = cmd.ExecuteReader();
@@ -69,16 +70,16 @@ namespace SOA_backend.Models.DAO
                     PlaceList.Add(new Place()
                     {
                         Id = Convert.ToInt32(dr[0].ToString()),
-                        Nome = dr[1].ToString(),
-                        Descricao = dr[2].ToString(),
-                        Imagem = dr[3].ToString(),
-                        Categoria = dr[4].ToString(),
+                        Name = dr[1].ToString(),
+                        Description = dr[2].ToString(),
+                        Image = dr[3].ToString(),
+                        Category = dr[4].ToString(),
                         Latitude = dr[5].ToString(),
                         Longitude = dr[6].ToString(),
-                        MediaGeral = Convert.ToDecimal(dr[7].ToString()),
-                        MediaLimpeza = Convert.ToDecimal(dr[8].ToString()),
-                        MediaDistancia = Convert.ToDecimal(dr[9].ToString()),
-                        MediaMascara = Convert.ToDecimal(dr[10].ToString()),
+                        AverageTotalScore = string.IsNullOrEmpty(dr[7].ToString()) ? 0 : Convert.ToDecimal(dr[7].ToString()),
+                        AverageCleaningScore = string.IsNullOrEmpty(dr[8].ToString()) ? 0 : Convert.ToDecimal(dr[8].ToString()),
+                        AverageDistanceScore = string.IsNullOrEmpty(dr[9].ToString()) ? 0 : Convert.ToDecimal(dr[9].ToString()),
+                        AverageMaskUseScore = string.IsNullOrEmpty(dr[10].ToString()) ? 0 : Convert.ToDecimal(dr[10].ToString()),
                     });
                 }
                 return PlaceList;
@@ -118,16 +119,16 @@ namespace SOA_backend.Models.DAO
                 dr.Read();
 
                 selectedPlace.Id = Convert.ToInt32(dr[0].ToString());
-                selectedPlace.Nome = dr[1].ToString();
-                selectedPlace.Descricao = dr[2].ToString();
-                selectedPlace.Imagem = dr[3].ToString();
-                selectedPlace.Categoria = dr[4].ToString();
+                selectedPlace.Name = dr[1].ToString();
+                selectedPlace.Description = dr[2].ToString();
+                selectedPlace.Image = dr[3].ToString();
+                selectedPlace.Category = dr[4].ToString();
                 selectedPlace.Latitude = dr[5].ToString();
                 selectedPlace.Longitude = dr[6].ToString();
-                selectedPlace.MediaGeral = Convert.ToDecimal(dr[7].ToString());
-                selectedPlace.MediaLimpeza = Convert.ToDecimal(dr[8].ToString());
-                selectedPlace.MediaDistancia = Convert.ToDecimal(dr[9].ToString());
-                selectedPlace.MediaMascara = Convert.ToDecimal(dr[10].ToString());
+                selectedPlace.AverageTotalScore = string.IsNullOrEmpty(dr[7].ToString()) ? 0 : Convert.ToDecimal(dr[7].ToString());
+                selectedPlace.AverageCleaningScore = string.IsNullOrEmpty(dr[8].ToString()) ? 0 : Convert.ToDecimal(dr[8].ToString());
+                selectedPlace.AverageDistanceScore = string.IsNullOrEmpty(dr[9].ToString()) ? 0 : Convert.ToDecimal(dr[9].ToString());
+                selectedPlace.AverageMaskUseScore = string.IsNullOrEmpty(dr[10].ToString()) ? 0 : Convert.ToDecimal(dr[10].ToString());
 
                 return selectedPlace;
             }

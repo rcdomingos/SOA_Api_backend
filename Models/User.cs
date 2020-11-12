@@ -9,9 +9,9 @@ namespace SOA_backend.Models
     {
         //atributos
         private int id;
-        private string nome;
+        private string name;
         private string email;
-        private string senha;
+        private string password;
 
         //construtor
         public User()
@@ -22,33 +22,33 @@ namespace SOA_backend.Models
             Id = pID;
         }
 
-        public User(int pID, string pNome)
+        public User(int pID, string pName)
         {
-            Id = pID; Nome = pNome;
+            Id = pID; Name = pName;
         }
 
-        public User(int pID,  string pNome, string pEmail)
+        public User(int pID,  string pName, string pEmail)
         {
             Id = pID;
-            Nome = pNome;
+            Name = pName;
             Email = pEmail;
         }
 
-        public User(int pID, string pNome, string pEmail, string pSenha)
+        public User(int pID, string pName, string pEmail, string pPassword)
         {
             Id = pID;
-            Nome = pNome;
+            Name = pName;
             Email = pEmail;
-            Senha = pSenha;
+            Password = pPassword;
         }
 
         public int Id { get => id; set => id = value; }
 
-        public string Nome { get => nome; set => nome = value; }
+        public string Name { get => name; set => name = value; }
 
         public string Email { get => email; set => email = value; }
 
-        public string Senha { get => senha; set => senha = value; }
+        public string Password { get => password; set => password = value; }
 
     }
 }

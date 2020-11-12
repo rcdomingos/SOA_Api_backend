@@ -38,17 +38,18 @@ namespace SOA_backend.Controllers
         // POST: api/"Place/{id}/Comment
         [AcceptVerbs("POST")]
         [Route("Place/{id}/Comment")]
-        public string ApiAddNewComment(int id, [FromBody] Comment comment)
+        public HttpResponseMessage ApiAddNewComment(int id, [FromBody] Comment comment)
         {
             CommentDAO commentDAO = new CommentDAO();
 
-            if(commentDAO.InsertNewComment(id,comment,out string message))
+            if (commentDAO.InsertNewComment(id, comment, out string message))
             {
-                return "Comentario adicionado com sucesso! ";
+                return new HttpResponseMessage(HttpStatusCode.Created);
             }
             else
             {
-                return "Erro ao cadastrar o comentario " + message; 
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.InternalServerError, message);
+                return response;
             }
 
         }
@@ -56,17 +57,18 @@ namespace SOA_backend.Controllers
         // DELETE: api/"Place/Comment/{id}
         [AcceptVerbs("DELETE")]
         [Route("Place/Comment/{id}")]
-        public string ApiDeleteCommentById(int id)
+        public HttpResponseMessage ApiDeleteCommentById(int id)
         {
             CommentDAO commentDAO = new CommentDAO();
 
             if (commentDAO.DeleteCommentById(id, out string message))
             {
-                return "Comentario excluido com sucesso! ";
+                return new HttpResponseMessage(HttpStatusCode.NoContent);
             }
             else
             {
-                return "Erro ao deletar o comentario " + message;
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.InternalServerError, message);
+                return response;
             }
         }
     }

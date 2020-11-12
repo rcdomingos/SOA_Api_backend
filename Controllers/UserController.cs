@@ -16,16 +16,15 @@ namespace SOA_backend.Controllers
         // GET: api/Usuario
         [AcceptVerbs("GET")]
         [Route("Usuario")]
-        public string ApiGetAllUsers()
-        {         
+        public HttpResponseMessage ApiGetAllUsers()
+        {
             UserDAO _usuarioDAO = new UserDAO();
-            List<User> userList = _usuarioDAO.SelectAllUsers(out string message);
+            IEnumerable<User> users = _usuarioDAO.SelectAllUsers(out string message);
 
-            if (userList == null) return message;
+            var usersToJson = JsonConvert.SerializeObject(users);
 
-            var usuariosJson = JsonConvert.SerializeObject(userList);
-
-            return usuariosJson.ToString();
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK, usersToJson);
+            return response;
         }
 
         // GET: api/Usuario/5
@@ -44,17 +43,22 @@ namespace SOA_backend.Controllers
         // POST: api/Usuario
         [AcceptVerbs("POST")]
         [Route("Usuario")]
-        public string ApiAddNewUser([FromBody] User usuario)
+        public HttpResponseMessage ApiAddNewUser([FromBody] User usuario)
         {
             UserDAO _usuarioDAO = new UserDAO();
 
             if (_usuarioDAO.InsertUser(usuario, out string message))
             {
-                return "Usuario cadastrado com sucesso";
+                return new HttpResponseMessage(HttpStatusCode.Created);
             }
             else
             {
-                return "Erro: " + message;
+                string _ResponseMessage = message;
+
+                if (message.Contains("Violation of UNIQUE KEY constraint")) _ResponseMessage = "O email " + usuario.Email + " ja esta em uso!";
+
+                HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.InternalServerError, _ResponseMessage);
+                return response;
             };
 
         }
@@ -62,13 +66,22 @@ namespace SOA_backend.Controllers
         //GET: api/Usuario/login
         [AcceptVerbs("GET")]
         [Route("Usuario/Login")]
-        public string ApiUserLogin(string email, string senha)
+        public HttpResponseMessage ApiUserLogin(string email, string password)
         {
+            var response = new HttpResponseMessage();
             UserDAO _usuarioDAO = new UserDAO();
-            User user = _usuarioDAO.SelectUserByEmailAndPass(email, senha, out string message);
-            if (user == null) return message;
-            var userJson = JsonConvert.SerializeObject(user);
-            return userJson.ToString();
+            User user = _usuarioDAO.SelectUserByEmailAndPass(email, password, out string message);
+            if (user == null)
+            {
+                response = Request.CreateResponse(HttpStatusCode.Unauthorized, message);
+            }
+            else
+            {
+                var userJson = JsonConvert.SerializeObject(user);
+                response = Request.CreateResponse(HttpStatusCode.OK, userJson);
+            }
+
+            return response;
         }
 
         // PUT: api/Usuario/5
@@ -76,6 +89,6 @@ namespace SOA_backend.Controllers
         {
         }
 
-  
+
     }
 }
